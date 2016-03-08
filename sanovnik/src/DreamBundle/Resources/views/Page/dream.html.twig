@@ -1,0 +1,92 @@
+{% extends '::base.html.twig' %}
+{% block title %}Pregled sna{% endblock %}
+
+
+ {% block container %}
+
+         <div class="well" style="padding: 15px; border: solid; border-color: #cbcbcb; border-width: thick"  >
+             <div class="row text-justify" style="padding-left: 1ch;padding-right: 1ch">
+               <h4>  {{ dream.text }}</h4>
+             </div> <br><br>
+
+             <div class="row" style="padding-left: 1ch;padding-right: 1ch">
+
+                 {% if app.session.get('username')=='' %}
+                     <a href="{{ path('dream_likes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm " data-toggle="modal" data-target="#regM">
+                         <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Like</a>
+                     <span class="text-primary" style="font-size: medium">[{{ dream.likes}}] </span>
+
+                     <a href="{{ path('dream_dislikes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#regM">
+                         <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span> Disike</a>
+                     <span class="text-primary" style="font-size: medium">[{{ dream.unlikes}}] </span>
+
+                     <span class="pull-right">by <a href="">{{ dream.user.username }}</a> [{{ dream.created|date("m/d/Y") }}]</span>
+
+
+                 {% else %}
+
+                     {% if dream.id in app.session.get('likedDreams') %}
+                         <a href="{{ path('dream_likes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm disabled">
+                             <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Like</a>
+                         <span class="text-primary" style="font-size: medium">[{{ dream.likes}}] </span>
+                     {% else %}
+                         <a href="{{ path('dream_likes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm ">
+                             <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> Like</a>
+                         <span class="text-primary" style="font-size: medium">[{{ dream.likes}}] </span>
+                     {% endif %}
+
+                     {% if dream.id in app.session.get('dislikedDreams') %}
+                         <a href="{{ path('dream_dislikes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm disabled">
+                             <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span> Disike</a>
+                         <span class="text-primary" style="font-size: medium">[{{ dream.unlikes}}] </span>
+                     {% else %}
+                         <a href="{{ path('dream_dislikes', {'id':dream.id}) }}" type="button" class="btn btn-default btn-sm">
+                             <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span> Disike</a>
+                         <span class="text-primary" style="font-size: medium">[{{ dream.unlikes}}] </span>
+                     {% endif %}
+
+
+
+                     <span class="pull-right">by <a href="">{{ dream.user.username }}</a> [{{ dream.created|date("m/d/Y") }}]</span>
+
+                 {% endif %}
+
+
+
+             </div>
+
+         </div>
+
+
+
+
+
+     <!-- Modal -->
+     <div class="modal fade" id="regM" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+         <div class="modal-dialog " role="document">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <div class="alert alert-danger" role="alert">
+                         <strong>Morate biti ulogovani da biste lajkovali!</strong>
+                     </div>
+
+                 </div>
+                 <div class="modal-body col-md-12">
+                     <a href="#" type="button" data-dismiss="dialog" class="btn btn-primary  col-md-5" data-toggle="modal" data-target="#myModalLogin">Login</a>
+
+                     <a href="#" type="button" class="btn btn-primary  col-md-5" data-toggle="modal" data-target="#myModalReg">Registracija</a>
+
+                     <button type="button" class="btn btn-default col-md-2" data-dismiss="modal">Ponisti</button>
+
+
+                 </div>
+                 <div class="modal-footer">
+
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
+
+ {% endblock %}

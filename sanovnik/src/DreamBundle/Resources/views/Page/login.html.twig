@@ -1,0 +1,11 @@
+{{ form_start(form, {'action': path('loginUser'), 'method': 'POST'}) }}
+    {{ form_errors(form) }}
+<h3>Username</h3>
+{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+<h3>Password:</h3>
+{{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+<br><br>
+
+{{ form_widget(form.save, {'attr': {'class': 'form-control btn btn-info'}}) }}
+
+    {{ form_end(form) }}

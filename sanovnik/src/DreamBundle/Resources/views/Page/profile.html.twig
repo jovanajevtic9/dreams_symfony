@@ -1,0 +1,12 @@
+{% extends '::base.html.twig' %}
+{% block title %}Moj profil{% endblock %}
+
+
+ {% block container %}
+     <div class="" style="padding: 15px"  >
+     <h2> <span class="" style="color: white">  Hello {{ app.session.get('username') }}</span></h2>
+     </div>
+
+     {% include 'DreamBundle:Page:dreams.html.twig' with {'dreams': dreams} %}
+
+{% endblock %}

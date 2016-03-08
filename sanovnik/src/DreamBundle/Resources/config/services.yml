@@ -1,0 +1,4 @@
+services:
+#    dream.example:
+#        class: DreamBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

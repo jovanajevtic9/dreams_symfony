@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset=utf-8" />
+    <title>{% block title %}Sanovnik{% endblock %} - Sanovnik</title>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% block stylesheets %}
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
+        <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    <link rel="shortcut icon" href="{{ asset('dream.png') }}" />
+</head>
+<body style="background-image: url('http://lifejourney.me.uk/wp-content/uploads/2015/08/fantasy-night-moon-clouds-sky-1680x1050.jpg');   background-size:cover">
+
+<nav class="navbar navbar-inverse">
+
+    <div class="container-fluid container" style="padding-left: 25px;padding-right: 25px">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button> <a class="navbar-brand" href="#"> </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+            <ul class="nav navbar-nav">
+                <li><a href="/sort/popular">Popularno</a></li>
+                <li><a href="/sort/best">Najbolje</a></li>
+                <li><a href="/sort/new">Novo</a></li>
+                <li>
+
+                        <a href="#" class=" dropdown-toggle"  id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Sortiraj po
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="/sort/popular">Popularnosti</a></li>
+                            <li><a href="/sort/new">Datumu kreiranja</a></li>
+                            <li><a href="/sort/best">Broju lajkova</a></li>
+                        </ul>
+
+
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+
+                {% if app.session.get('username')=='' %}
+                    <li><a href="#" data-toggle="modal" data-target="#myModalLogin">Login</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModalReg">Registracija</a></li>
+                {% else %}
+                    <li><a href="/profile">Moj profil</a></li>
+                    <li><a href="/logout" >Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+</nav>
+
+    <div class="container" style="padding-left: 5ch;padding-right: 5ch" >
+        <div class="row" style="margin: auto;">
+        <div class="col-md-8">
+
+
+            {% for flash_message in app.session.flashbag.get('error') %}
+
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong></strong>{{ flash_message }}
+                </div>
+            {% endfor %}
+
+
+            {% for flash_message in app.session.flashbag.get('notice') %}
+
+                <div class="alert alert-info alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong></strong>{{ flash_message }}
+                </div>
+            {% endfor %}
+            {% block container %}
+            {% endblock %}
+
+
+        </div>
+        <div class="col-md-1 "></div>
+        <div class="col-md-3" >
+            {% block sidebar %}
+                {{ render(controller("DreamBundle:Dream:createDream")) }}
+            {% endblock %}
+        </div>
+
+        </div>
+    </div>
+<!-- Modal -->
+<div class="modal fade" id="myModalReg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h5> Registracija</h5>
+
+            </div>
+            <div class="modal-body">
+                {{ render(controller("DreamBundle:Page:register")) }}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ponisti</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5> Login</h5>
+
+            </div>
+            <div class="modal-body">
+                {{ render(controller("DreamBundle:Page:login")) }}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ponisti</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% block javascripts %}
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <script src="{{ asset('js/controller.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>
